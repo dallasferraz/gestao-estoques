@@ -168,6 +168,14 @@ header.vendas <- header.vendas %>% separate(Data,c("dia","mes","ano"),"/")
 #unindo
 header.vendas <- header.vendas %>% unite(Data,c("ano","mes","dia"),sep="-")
 
+#consertando as vígulas dos outros itens
+vendas <- vendas %>% separate(Unitário,c("Reais","Centavos"),",")
+vendas <- vendas %>% unite(Unitário,c("Reais","Centavos"),sep=".")
+vendas <- vendas %>% separate(Subtotal,c("Reais","Centavos"),",")
+vendas <- vendas %>% unite(Subtotal,c("Reais","Centavos"),sep=".")
+vendas <- vendas %>% separate(Quant.,c("Quant.","resto"),",")
+vendas <- vendas[,-3]
+
 #exportando
 write.csv(vendas, 'C:/Users/Dallas/Desktop/spreadsheets/vendas.csv')
 write.csv(header.vendas, 'C:/Users/Dallas/Desktop/spreadsheets/cabecalho_vendas.csv')
